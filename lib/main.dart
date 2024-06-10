@@ -1,12 +1,17 @@
-import 'package:control_medico/inicio_de_sesion.dart';
+import 'package:control_medico/index.dart';
 import 'package:flutter/material.dart';
+import 'inicio_de_sesion.dart';
 
 void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: InicioSesion(),
-  ));
+  runApp(MyApp());
 }
 
-// esta bien random esta cosa https://github.com/g-garcia-arv/control_medico_flutter.git
-
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: UserListScreen(),
+    );
+  }
+}

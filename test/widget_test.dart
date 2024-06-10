@@ -1,32 +1,35 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:control_medico/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('Verify initial UI elements', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verify that the initial UI elements are present.
+    expect(find.text('Número de Empleado'), findsOneWidget);
+    expect(find.text('Contraseña'), findsOneWidget);
+    expect(find.text('Iniciar Sesión'), findsOneWidget);
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  testWidgets('Login process test', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(MyApp());
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Enter text in the employee number field
+    await tester.enterText(find.byType(TextFormField).at(0), '123456');
+
+    // Enter text in the password field
+    await tester.enterText(find.byType(TextFormField).at(1), 'password123');
+
+    // Tap the login button
+    await tester.tap(find.text('Iniciar Sesión'));
+
+    // Wait for the widgets to rebuild
+    await tester.pumpAndSettle();
+
+    // Verify that we are now on the UserListScreen by checking for a specific widget from that screen
+    expect(find.text('User List'), findsOneWidget);
   });
 }
-
-//Probando que el git funcione correctamente 

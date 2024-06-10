@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'index.dart'; // Importa la pantalla UserListScreen
 
 class InicioSesion extends StatefulWidget {
   const InicioSesion({super.key});
@@ -51,46 +52,59 @@ class _InicioSesionState extends State<InicioSesion> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Número de Empleado',
+                    Form(
+                      key: _formKey, // Añadimos el GlobalKey al formulario
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Número de Empleado',
+                            ),
+                            controller: _numeroEmpleadoController,
+                            validator: (value) {
+                              if (value?.isEmpty ?? true) {
+                                return 'Ingrese su número de empleado';
+                              }
+                              // Add more specific validation if needed
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: 16.0),
+                          TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Contraseña',
+                            ),
+                            controller: _contrasenaController,
+                            obscureText: true, // Mask password characters
+                            validator: (value) {
+                              if (value?.isEmpty ?? true) {
+                                return 'Ingrese su contraseña';
+                              }
+                              // Add more specific validation if needed
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: 32.0),
+                          ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState?.validate() ?? false) {
+                                // Replace with your login logic (backend integration)
+                                // e.g., call a login API or use Firebase Authentication
+                                print(
+                                    'Login initiated with username: ${_numeroEmpleadoController.text} and password: ${_contrasenaController.text}');
+                                // Handle successful/unsuccessful login attempts
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => UserListScreen(),
+                                  ),
+                                );
+                              }
+                            },
+                            child: Text('Iniciar Sesión'),
+                          ),
+                        ],
                       ),
-                      controller: _numeroEmpleadoController,
-                      validator: (value) {
-                        if (value?.isEmpty ?? true) {
-                          return 'Ingrese su número de empleado';
-                        }
-                        // Add more specific validation if needed
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 16.0),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Contraseña',
-                      ),
-                      controller: _contrasenaController,
-                      obscureText: true, // Mask password characters
-                      validator: (value) {
-                        if (value?.isEmpty ?? true) {
-                          return 'Ingrese su contraseña';
-                        }
-                        // Add more specific validation if needed
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 32.0),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          // Replace with your login logic (backend integration)
-                          // e.g., call a login API or use Firebase Authentication
-                          print(
-                              'Login initiated with username: ${_numeroEmpleadoController.text} and password: ${_contrasenaController.text}');
-                          // Handle successful/unsuccessful login attempts
-                        }
-                      },
-                      child: Text('Iniciar Sesión'),
                     ),
                   ],
                 ),
