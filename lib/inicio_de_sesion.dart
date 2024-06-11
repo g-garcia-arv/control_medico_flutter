@@ -39,16 +39,14 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        
-      ),
+      appBar: AppBar(),
       body: Column(
         // Change from Form to Column
         children: [
           // Add your image widget here
           Image.asset(
             'assets/LogoMefasa.png', // Replace with your image path
-            width: 200, // Adjust width and height as needed
+            width: 300, // Adjust width and height as needed
             height: 200,
           ),
           SizedBox(height: 20), // Add spacing between image and form
@@ -83,9 +81,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   SizedBox(height: 40),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueGrey,
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.white, backgroundColor: Color.fromARGB(255, 2, 44, 64),
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
