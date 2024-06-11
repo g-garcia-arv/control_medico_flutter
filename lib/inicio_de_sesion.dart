@@ -1,99 +1,102 @@
 import 'package:flutter/material.dart';
+import '../functions/api_functions.dart'; // Importar servicio de autenticación
 
-class InicioSesion extends StatefulWidget {
-  const InicioSesion({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  _InicioSesionState createState() => _InicioSesionState();
+  // ignore: library_private_types_in_public_api
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _InicioSesionState extends State<InicioSesion> {
+class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _numeroEmpleadoController = TextEditingController();
   final _contrasenaController = TextEditingController();
+  String _mensajeError = "";
+
+  Future<void> _iniciarSesion() async {
+    final numeroEmpleado = _numeroEmpleadoController.text;
+    final contrasena = _contrasenaController.text;
+
+    final resultado =
+        await AuthenticationService().iniciarSesion(numeroEmpleado, contrasena);
+
+    if (resultado != null) {
+      // La autenticación fue exitosa
+      // Navega a la pantalla principal o realiza la acción correspondiente
+      Navigator.pushReplacementNamed(context, '/ pantallaPrincipal');
+    } else {
+      // La autenticación falló
+      // Muestra un mensaje de error al usuario
+      setState(() {
+        _mensajeError =
+            'Numero de empleado o Contraseña incorrecta. Por favor, inténtalo de nuevo.';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        // Use a Stack to position the image and form widgets
-        children: <Widget>[
-          // Imagen circular en la parte superior
-          Positioned(
-            top: 40.0,
-            left: 0.0,
-            right: 0.0,
-            child: Container(
-              height: 200.0,
-              child: Center(
-                child: Image(
-                  image:
-                      AssetImage('assets/LogoMefasa.png'), // Imagen del avatar
-                  fit: BoxFit.contain, // Ajusta la imagen dentro del contenedor
-                ),
-              ),
-            ),
+      appBar: AppBar(
+        
+      ),
+      body: Column(
+        // Change from Form to Column
+        children: [
+          // Add your image widget here
+          Image.asset(
+            'assets/LogoMefasa.png', // Replace with your image path
+            width: 200, // Adjust width and height as needed
+            height: 200,
           ),
-
-          // Contenedor con el formulario de inicio de sesión
-          Positioned(
-            top: 240.0, // Posiciona el formulario en la parte inferior
-            left: 0.0,
-            right: 0.0,
-            child: Container(
+          SizedBox(height: 20), // Add spacing between image and form
+          Form(
+            // Reintroduce the Form element
+            key: _formKey,
+            child: Padding(
               padding: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16.0),
-              ),
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Número de Empleado',
-                      ),
-                      controller: _numeroEmpleadoController,
-                      validator: (value) {
-                        if (value?.isEmpty ?? true) {
-                          return 'Ingrese su número de empleado';
-                        }
-                        // Add more specific validation if needed
-                        return null;
-                      },
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: _numeroEmpleadoController,
+                    decoration:
+                        InputDecoration(labelText: 'Numero de empleado'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Ingresa tu número de empleado';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 20),
+                  TextFormField(
+                    controller: _contrasenaController,
+                    obscureText: true,
+                    decoration: InputDecoration(labelText: 'Contraseña'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Ingresa tu contraseña';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 40),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueGrey,
                     ),
-                    SizedBox(height: 16.0),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Contraseña',
-                      ),
-                      controller: _contrasenaController,
-                      obscureText: true, // Mask password characters
-                      validator: (value) {
-                        if (value?.isEmpty ?? true) {
-                          return 'Ingrese su contraseña';
-                        }
-                        // Add more specific validation if needed
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 32.0),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          // Replace with your login logic (backend integration)
-                          // e.g., call a login API or use Firebase Authentication
-                          print(
-                              'Login initiated with username: ${_numeroEmpleadoController.text} and password: ${_contrasenaController.text}');
-                          // Handle successful/unsuccessful login attempts
-                        }
-                      },
-                      child: Text('Iniciar Sesión'),
-                    ),
-                  ],
-                ),
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await _iniciarSesion();
+                      }
+                    },
+                    child: Text('Iniciar Sesión'),
+                  ),
+                  if (_mensajeError != null)
+                    Text(_mensajeError, style: TextStyle(color: Colors.red)),
+                ],
               ),
             ),
           ),

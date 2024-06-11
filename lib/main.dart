@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: InicioSesion(),
+    home: LoginScreen(),
   ));
 }
 
-// esta bien random esta cosa https://github.com/g-garcia-arv/control_medico_flutter.git
+
 
