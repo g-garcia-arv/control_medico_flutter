@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
             width: 300, // Adjust width and height as needed
             height: 200,
           ),
-          SizedBox(height: 20), // Add spacing between image and form
+          const SizedBox(height: 20), // Add spacing between image and form
           Form(
             // Reintroduce the Form element
             key: _formKey,
@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextFormField(
                     controller: _numeroEmpleadoController,
                     decoration:
-                        InputDecoration(labelText: 'Numero de empleado'),
+                        const InputDecoration(labelText: 'Numero de empleado'),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Ingresa tu número de empleado';
@@ -68,11 +68,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextFormField(
                     controller: _contrasenaController,
                     obscureText: true,
-                    decoration: InputDecoration(labelText: 'Contraseña'),
+                    decoration: const InputDecoration(labelText: 'Contraseña'),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Ingresa tu contraseña';
@@ -80,20 +80,19 @@ class _LoginScreenState extends State<LoginScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                   TextButton(
                     style: TextButton.styleFrom(
-                      foregroundColor: Colors.white, backgroundColor: Color.fromARGB(255, 2, 44, 64),
+                      foregroundColor: Colors.white, backgroundColor: const Color.fromARGB(255, 2, 44, 64),
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         await _iniciarSesion();
                       }
                     },
-                    child: Text('Iniciar Sesión'),
+                    child: const Text('Iniciar Sesión'),
                   ),
-                  if (_mensajeError != null)
-                    Text(_mensajeError, style: TextStyle(color: Colors.red)),
+                  Text(_mensajeError, style: const TextStyle(color: Colors.red)),
                 ],
               ),
             ),

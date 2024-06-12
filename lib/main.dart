@@ -1,13 +1,11 @@
 import 'package:control_medico/index.dart';
 import 'package:flutter/material.dart';
-import 'inicio_de_sesion.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: LoginScreen(),
+    home: UserListScreen(),
   ));
 }
 
-
-
+//UserListScreen y LoginScreen

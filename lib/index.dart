@@ -29,7 +29,7 @@ final List<MedicalProcedure> procedures = [
     id: 1,
     employeeNumber: "12345",
     description: "Cosas importantes",
-    doctor: "Dr.pacheco",
+    doctor: "Dr. Pacheco",
     medicalProcedure: "Revisión general",
     consultationDate: "2023-06-01",
     reviewDate: "2023-06-15",
@@ -38,37 +38,19 @@ final List<MedicalProcedure> procedures = [
   MedicalProcedure(
     id: 2,
     employeeNumber: "67890",
-    description: "descripcion",
-    doctor: "Dra.123",
+    description: "Descripción",
+    doctor: "Dra. 123",
     medicalProcedure: "Consulta en algo",
     consultationDate: "2023-06-05",
     reviewDate: "2023-06-20",
     status: "Pendiente",
   ),
-  MedicalProcedure(
-    id: 1,
-    employeeNumber: "12345",
-    description: "Cosas importantes",
-    doctor: "Dr.pacheco",
-    medicalProcedure: "Revisión general",
-    consultationDate: "2023-06-01",
-    reviewDate: "2023-06-15",
-    status: "Completado",
-  ),
-  MedicalProcedure(
-    id: 1,
-    employeeNumber: "12345",
-    description: "Cosas importantes",
-    doctor: "Dr.pacheco",
-    medicalProcedure: "Revisión general",
-    consultationDate: "2023-06-01",
-    reviewDate: "2023-06-15",
-    status: "Completado",
-  ),
   // Agrega más procedimientos aquí
 ];
 
 class UserListScreen extends StatefulWidget {
+  const UserListScreen({super.key});
+
   @override
   _UserListScreenState createState() => _UserListScreenState();
 }
@@ -94,11 +76,13 @@ class _UserListScreenState extends State<UserListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFB0BEC5), 
       appBar: AppBar(
-        title: Text("Lista de Procedimientos"),
+        title: const Text("Lista de Procedimientos", style: TextStyle(color: Colors.white)),
+        backgroundColor: const Color(0xFF1E2134), 
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search, color: Colors.white),
             onPressed: () {
               showSearch(
                 context: context,
@@ -108,7 +92,7 @@ class _UserListScreenState extends State<UserListScreen> {
           ),
         ],
       ),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: ListView.builder(
         itemCount: _filteredProcedures.length,
         itemBuilder: (context, index) {
@@ -137,7 +121,7 @@ class ProcedureCard extends StatelessWidget {
   final VoidCallback onDelete;
   final VoidCallback onEdit;
 
-  ProcedureCard({
+  const ProcedureCard({super.key, 
     required this.procedure,
     required this.onDelete,
     required this.onEdit,
@@ -146,47 +130,51 @@ class ProcedureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      color: Colors.white, // Color de fondo blanco para las cartas
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
       elevation: 5,
       child: Padding(
-        padding: EdgeInsets.all(15),
-        child: Row(
+        padding: const EdgeInsets.all(15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CircleAvatar(
-              radius: 30,
-              child: Text(procedure.employeeNumber[0]),
-            ),
-            SizedBox(width: 15),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Empleado: ${procedure.employeeNumber}",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Empleado: ${procedure.employeeNumber}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: const Color(0xFF1E2134), // Texto de color azul oscuro
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text("Descripción: ${procedure.description}", style: TextStyle(color: Colors.black)),
+                      Text("Médico: ${procedure.doctor}", style: TextStyle(color: Colors.black)),
+                      Text("Fecha de Consulta: ${procedure.consultationDate}", style: TextStyle(color: Colors.black)),
+                      Text("Estado: ${procedure.status}", style: TextStyle(color: Colors.black)),
+                    ],
                   ),
-                  SizedBox(height: 5),
-                  Text("Descripción: ${procedure.description}"),
-                  Text("Médico: ${procedure.doctor}"),
-                  Text("Fecha de Consulta: ${procedure.consultationDate}"),
-                  Text("Estado: ${procedure.status}"),
-                ],
-              ),
+                ),
+              ],
             ),
-            Column(
+            const Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  icon: Icon(Icons.edit, color: Colors.blue),
+                  icon: Icon(Icons.edit, color: const Color(0xFF1E2134)),
                   onPressed: onEdit,
                 ),
                 IconButton(
-                  icon: Icon(Icons.delete, color: Colors.red),
+                  icon: const Icon(Icons.delete, color: Colors.red),
                   onPressed: onDelete,
                 ),
               ],
@@ -199,6 +187,8 @@ class ProcedureCard extends StatelessWidget {
 }
 
 class AppDrawer extends StatelessWidget {
+  const AppDrawer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -207,9 +197,9 @@ class AppDrawer extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: const Color(0xFF1E2134), // Azul más oscuro y fuerte para el encabezado del drawer
             ),
-            child: Text(
+            child: const Text(
               'Mefasa',
               style: TextStyle(
                 color: Colors.white,
@@ -218,29 +208,29 @@ class AppDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.home),
-            title: Text('Tabla'),
+            leading: Icon(Icons.home, color: const Color.fromARGB(255, 0, 0, 0)), // Icono de color blanco
+            title: const Text('Tabla', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0))),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            leading: Icon(Icons.person),
-            title: Text('Perfil'),
+            leading: Icon(Icons.person, color: const Color.fromARGB(255, 0, 0, 0)), // Icono de color blanco
+            title: const Text('Perfil', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0))),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Ajustes'),
+            leading: Icon(Icons.settings, color: Color.fromARGB(255, 0, 0, 0)), // Icono de color blanco
+            title: const Text('Ajustes', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0))),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            leading: Icon(Icons.logout),
-            title: Text('Logout'),
+            leading: Icon(Icons.logout, color: const Color.fromARGB(255, 0, 0, 0)), // Icono de color blanco
+            title: const Text('Logout', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0))),
             onTap: () {
               Navigator.pop(context);
             },
@@ -260,7 +250,7 @@ class ProcedureSearchDelegate extends SearchDelegate {
   List<Widget>? buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Icons.clear),
+        icon: const Icon(Icons.clear, color: Colors.white),
         onPressed: () {
           query = '';
           onSearch(query);
@@ -272,7 +262,7 @@ class ProcedureSearchDelegate extends SearchDelegate {
   @override
   Widget? buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.arrow_back),
+      icon: const Icon(Icons.arrow_back, color: Colors.white),
       onPressed: () {
         close(context, null);
       },
@@ -290,4 +280,10 @@ class ProcedureSearchDelegate extends SearchDelegate {
     onSearch(query);
     return Container();
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: UserListScreen(),
+  ));
 }

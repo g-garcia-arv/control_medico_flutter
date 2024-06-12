@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:control_medico/main.dart';
 
 void main() {
   testWidgets('Verify initial UI elements', (WidgetTester tester) async {
