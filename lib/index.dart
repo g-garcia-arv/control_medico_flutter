@@ -78,7 +78,7 @@ class _UserListScreenState extends State<UserListScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFB0BEC5), 
       appBar: AppBar(
-        title: const Text("Lista de Procedimientos", style: TextStyle(color: Colors.white)),
+        title: const Text("Registros", style: TextStyle(color: Colors.white)),
         backgroundColor: const Color(0xFF1E2134), 
         actions: [
           IconButton(
